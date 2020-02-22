@@ -52,7 +52,7 @@ fetch("https://api.football-data.org/v2/competitions/CL/standings", {
     .then(response => response.json())
     .then(data => {
         console.log(data)
-        let output
+        let output = ''
         data.standings[0].table.forEach(function (stat) {
             output += `
             <tr>
@@ -87,19 +87,44 @@ fetch("https://api.football-data.org/v2/competitions/CL/matches?status=FINISHED"
         document.getElementById('score1').innerHTML = data.matches[188].score.fullTime.homeTeam + ":" + data.matches[188].score.fullTime.awayTeam
         document.getElementById('TeamA2').innerHTML = data.matches[189].homeTeam.name
         document.getElementById('TeamB2').innerHTML = data.matches[189].awayTeam.name
-        document.getElementById('score2').innerHTML = data.matches[188].score.fullTime.homeTeam + ":" + data.matches[188].score.fullTime.awayTeam
+        document.getElementById('score2').innerHTML = data.matches[189].score.fullTime.homeTeam + ":" + data.matches[189].score.fullTime.awayTeam
     })
     .catch(err => {
         console.log(err);
     });
-fetch("http://api.football-data.org/v2/teams/64", {
-    "method": "GET",
-    "headers": {
-        "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
-    }
-})
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-    })
 
+
+function display(value) {
+    if (value == 'Liverpool')
+        id = 64
+    else if (value == 'Real Madrid')
+        id = 86
+    else if (value == 'Manchester City')
+        id = 65
+    else if (value == 'Manchester Utd')
+        id = 66
+    else if (value == 'Chelsea')
+        id = 61
+    console.log(value)
+
+    fetch("http://api.football-data.org/v2/teams/" + id, {
+        "method": "GET",
+        "headers": {
+            "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            let output = ''
+            data.squad.forEach(function (player) {
+                output += `
+                    <ul>
+                        <li>${player.name}</li>
+                    </ul>
+                `
+                document.getElementById('team-output').innerHTML = output
+            })
+        })
+
+}
