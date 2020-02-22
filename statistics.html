@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -14,6 +13,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
     <script src="javascript.js"></script>
     <link rel="stylesheet" href="css/aos.css">
@@ -68,17 +68,28 @@
     </header>
     <br>
     <br>
+
     <div class="container">
-        <h1 class="lead">Select a Team</h1>
-        <input type="button" class=" btn teams" value="Liverpool" onclick="display(value)">
-        <input type="button" class=" btn teams" value="Real Madrid" onclick="display(value)">
-        <input type="button" class=" btn teams" value="Chelsea" onclick="display(value)">
-        <input type="button" class=" btn teams" value="Manchester Utd" onclick="display(value)">
-        <input type="button" class=" btn teams" value="Manchester City" onclick="display(value)">
+        <h1>Top Goal Scorer</h1>
+        <input type="button" class="btn" onclick="getData(value)" value="Premier League">
+        <input type="button" class="btn" onclick="getData(value)" value="Champions League">
+        <input type="button" class="btn" onclick="getData(value)" value="Serie A">
+        <input type="button" class="btn" onclick="getData(value)" value="Bundesliga">
+        <div class="row pb-5">
+            <div class="col-md-8 mx-auto">
+                <canvas id="canvas123" width="200px" height="200px"></canvas>
+            </div>
+        </div>
 
-        <p class="jumbotron" id="team-output"></p>
-
+        <h1>Total Goals Scored</h1>
+        <div class="row pb-5">
+            <div class="col-md-8 mx-auto">
+                <canvas id="canvas1234" width="200px" height="200px"></canvas>
+            </div>
+        </div>
     </div>
+
 </body>
+
 
 </html>

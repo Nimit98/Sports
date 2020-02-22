@@ -24,8 +24,7 @@ fetch("https://api.football-data.org/v2/competitions/PL/standings", {
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-        let output
+        let output = ''
         data.standings[0].table.forEach(function (stat) {
             output += `
             <tr>
@@ -51,7 +50,6 @@ fetch("https://api.football-data.org/v2/competitions/CL/standings", {
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         let output = ''
         data.standings[0].table.forEach(function (stat) {
             output += `
@@ -105,7 +103,6 @@ function display(value) {
         id = 66
     else if (value == 'Chelsea')
         id = 61
-    console.log(value)
 
     fetch("http://api.football-data.org/v2/teams/" + id, {
         "method": "GET",
@@ -115,7 +112,6 @@ function display(value) {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             let output = ''
             data.squad.forEach(function (player) {
                 output += `
@@ -127,4 +123,96 @@ function display(value) {
             })
         })
 
+}
+
+async function getData(e) {
+    if (e == 'Premier League')
+        id = 'PL'
+    else if (e == 'Champions League')
+        id = 'CL'
+    else if (e == 'Serie A')
+        id = 'SA'
+    else if (e == 'Bundesliga')
+        id = 'BL1'
+
+    var url = 'https://api.football-data.org/v2/competitions/'
+    var player = []
+    var int = 0
+    var goals = []
+    var count = []
+    var i
+    const response2 = await fetch(url + id + '/scorers', {
+        "method": "GET",
+        "headers": {
+            "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
+        }
+    })
+    const responseData2 = await response2.json()
+    console.log(responseData2)
+    for (i = 0; i <= 9; i++) {
+        player.push(responseData2.scorers[i].player.name)
+        goals.push(parseInt(responseData2.scorers[i].numberOfGoals))
+        count.push(parseInt(int += 2))
+    }
+    console.log(player)
+    console.log(goals)
+    console.log(count)
+    var ctx = document.getElementById('canvas123').getContext('2d');
+    var canvas123 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: player,
+            datasets: [
+                {
+                    label: 'Goals',
+                    data: goals,
+                    fill: false,
+                    backgroundColor: 'rgb(255,0,36,0.8)',
+                    borderColor: 'rgb(255,23,23,1)'
+                }
+            ]
+        }
+    })
+    return responseData2
+}
+function getData2(value) {
+
+    var player = []
+    var int = 0
+    var goals = []
+    var count = []
+    var i
+    const response1 = fetch("/v2/competitions/PL/standings", {
+        "method": "GET",
+        "headers": {
+            "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
+        }
+    })
+    const responseData1 = response1.json()
+    console.log(responseData1)
+    for (i = 0; i <= 9; i++) {
+        player.push(responseData2.scorers[i].player.name)
+        goals.push(parseInt(responseData2.scorers[i].numberOfGoals))
+        count.push(parseInt(int += 2))
+    }
+    console.log(player)
+    console.log(goals)
+    console.log(count)
+    var ctx = document.getElementById('canvas123').getContext('2d');
+    var canvas123 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: player,
+            datasets: [
+                {
+                    label: 'Goals',
+                    data: goals,
+                    fill: false,
+                    backgroundColor: 'rgb(255,0,36,0.8)',
+                    borderColor: 'rgb(255,23,23,1)'
+                }
+            ]
+        }
+    })
+    return responseData2
 }
