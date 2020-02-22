@@ -92,3 +92,14 @@ fetch("https://api.football-data.org/v2/competitions/CL/matches?status=FINISHED"
     .catch(err => {
         console.log(err);
     });
+fetch("http://api.football-data.org/v2/teams/64", {
+    "method": "GET",
+    "headers": {
+        "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
+    }
+})
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+    })
+
