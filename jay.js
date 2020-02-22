@@ -91,3 +91,44 @@ fetch("https://api.football-data.org/v2/competitions/CL/scorers", {
 .catch(err => {
  console.log(err);
 });
+
+
+fetch("https://api.football-data.org/v2/competitions/PL/scorers", {
+  "method": "GET",
+  "headers": {
+    "X-Auth-Token": "1c62f8049db5459a877a18dd638925dd"
+  }
+})
+.then(response => response.json())
+.then(data =>{
+  console.log(data)
+  let output
+  data.scorers.forEach(function (stat) {
+
+    output+=`
+    <tr>
+          <th>${stat.player.name}</th>
+          <th>${stat.team.name}</th>
+          <th>${stat.numberOfGoals}</th>
+          </tr>
+          `
+
+    document.getElementById('new_row1').innerHTML = output})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})
+.catch(err => {
+ console.log(err);
+});
