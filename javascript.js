@@ -147,11 +147,11 @@ async function getData(e) {
             "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
         }
     })
-    const responseData2 = await response2.json()
-    console.log(responseData2)
+    const responseData = await response2.json()
+    console.log(responseData)
     for (i = 0; i <= 9; i++) {
-        player.push(responseData2.scorers[i].player.name)
-        goals.push(parseInt(responseData2.scorers[i].numberOfGoals))
+        player.push(responseData.scorers[i].player.name)
+        goals.push(parseInt(responseData.scorers[i].numberOfGoals))
         count.push(parseInt(int += 2))
     }
     console.log(player)
@@ -173,46 +173,53 @@ async function getData(e) {
             ]
         }
     })
-    return responseData2
+    return responseData
 }
-function getData2(value) {
+function getData2() {
 
-    var player = []
+    var goalsFor = []
+    var teams = []
     var int = 0
-    var goals = []
+    var goalsConc = []
     var count = []
     var i
-    const response1 = fetch("/v2/competitions/PL/standings", {
+    fetch("https://api.football-data.org/v2/competitions/PL/standings", {
         "method": "GET",
         "headers": {
             "X-Auth-Token": "3b37f88844ae41d7bbef11781c0c5c42",
         }
     })
-    const responseData1 = response1.json()
-    console.log(responseData1)
-    for (i = 0; i <= 9; i++) {
-        player.push(responseData2.scorers[i].player.name)
-        goals.push(parseInt(responseData2.scorers[i].numberOfGoals))
-        count.push(parseInt(int += 2))
-    }
-    console.log(player)
-    console.log(goals)
-    console.log(count)
-    var ctx = document.getElementById('canvas123').getContext('2d');
-    var canvas123 = new Chart(ctx, {
-        type: 'bar',
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            for (i = 0; i < 5; i++) {
+                teams.push(data.standings[0].table[i].team.name)
+                goalsFor.push(parseInt(data.standings[0].table[i].goalsFor))
+                goalsConc.push(parseInt(data.standings[0].table[i].goalsAgainst))
+            }
+        })
+    var ctx = document.getElementById('canvas1234').getContext('2d');
+    var canvas1234 = new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: player,
+            labels: teams,
             datasets: [
                 {
-                    label: 'Goals',
-                    data: goals,
+                    label: 'Goals Made',
+                    data: goalsFor,
                     fill: false,
                     backgroundColor: 'rgb(255,0,36,0.8)',
                     borderColor: 'rgb(255,23,23,1)'
+                },
+                {
+                    label: 'Goals Conceded',
+                    data: goalsConc,
+                    fill: false,
+                    backgroundColor: 'rgb(25,22,66,0.2)',
+                    borderColor: 'rgb(25,22,150,0.2)'
                 }
             ]
         }
     })
-    return responseData2
+
 }
